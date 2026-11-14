@@ -9,6 +9,79 @@
       Title="ProductPage" FontFamily="Comic Sans MS">
 
     <Grid>
-        <Button Content="Вперед" Height="30" Width="175" Click="Button_Click"></Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="900"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TextBlock Name="AuthTB" Text="Вы авторизованы как " Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
+            <TextBlock Name="FIOTB" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
+            <TextBlock Text="Роль: " Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
+            <TextBlock Name="RoleTB" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
+            <TextBlock Name="TBCount" Grid.Row="2" Grid.Column="0" FontSize="16" Height="18"></TextBlock>
+            <TextBlock Name="TBAllRecords"  Grid.Row="2" Grid.Column="1" FontSize="16" Height="18"></TextBlock>
+        </StackPanel>
+        <StackPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
+                <TextBlock Text="Поиск по наименованию"  TextAlignment="Right" Width="200" FontSize="16"></TextBlock>
+                <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="200" FontSize="20"></TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Фильтрация по скидке" TextAlignment="Left" Width="200" FontSize="16"></TextBlock>
+            <ComboBox Name="ComboType" SelectionChanged="ComboType_SelectionChanged" FontSize="15" Width="200">
+                <TextBlock>Все</TextBlock>
+                <TextBlock> от 0 до 9,99%</TextBlock>
+                <TextBlock> от 10 до 14,99%</TextBlock>
+                <TextBlock> от 15 до 100%</TextBlock>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="10" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
+            <RadioButton Content="По возрастанию стоимости" GroupName="Sort" Width="300" FontSize="16" Name="RButtonUp" Checked="RButtonUp_Checked"></RadioButton>
+            <RadioButton Content="По убыванию стоимости" GroupName="Sort" Width="300" FontSize="16" Name="RButtonDown" Checked="RButtonDown_Checked"></RadioButton>
+        </StackPanel>
+        <ListView Name="ProductListView" Grid.Row="2" Grid.ColumnSpan="4">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="950"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="110"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="200" Grid.Column="0" Grid.RowSpan="4" Stretch="UniformToFill" HorizontalAlignment="Center">
+                            <Image.Source>
+                                <Binding Path="ProductPhotoPath">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            Photo/picture.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Text="{Binding ProductName}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="22" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
+                        <TextBlock Text="{Binding ProductDescription}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20"></TextBlock>
+                        <TextBlock Text="{Binding Manufacturer.Manufacturer1}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20"></TextBlock>
+                        <TextBlock Text="{Binding ProductCost, StringFormat={}{0:0} рублей}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20"></TextBlock>
+                        <TextBlock Text="Скидка" Grid.Column="3" Grid.Row="0" FontSize="24"></TextBlock>
+                        <TextBlock Text="{Binding ProductDiscountAmount, StringFormat={}{0} %}" Grid.Column="3" Grid.Row="2" FontSize="34"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </Grid>
 </Page>
